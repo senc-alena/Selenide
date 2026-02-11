@@ -19,7 +19,7 @@ public class BaseTest {
         Configuration.timeout = 10000;
         Configuration.headless = false;
         Configuration.baseUrl = "https://test.skyrexio.com/";
-        Configuration.holdBrowserOpen = false;
+        //Configuration.holdBrowserOpen = true;
 
         loginPage = new LoginPage();
         homePage = new HomePage();
