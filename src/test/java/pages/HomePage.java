@@ -59,12 +59,12 @@ public class HomePage {
         actions().click($x(endLocator)).perform();
     }
 
-    public void verifyTooltipAppears() {
-        chartTooltip.shouldBe(visible, Duration.ofSeconds(5));
-    }
-
     public void hoverOverChart() {
         chart.shouldBe(visible).hover();
+    }
+
+    public void verifyTooltipAppears() {
+        chartTooltip.shouldBe(visible, Duration.ofSeconds(5));
     }
 
     public String getTooltipDate() {

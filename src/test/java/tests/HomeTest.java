@@ -3,6 +3,8 @@ package tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Selenide.sleep;
+
 public class HomeTest extends BaseTest {
 
     @BeforeMethod
@@ -46,8 +48,11 @@ public class HomeTest extends BaseTest {
         homePage.clickDataChoice();
         homePage.selectCustomRange(5, "January",
                 2026, 18, "January", 2026);
+        homePage.chart.scrollTo();
+        sleep(1000);
         homePage.hoverOverChart();
         homePage.verifyTooltipAppears();
+        sleep(1000);
 
         String date = homePage.getTooltipDate();
         String value = homePage.getTooltipValue();
