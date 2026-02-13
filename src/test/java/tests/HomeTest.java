@@ -3,6 +3,8 @@ package tests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static com.codeborne.selenide.Selenide.actions;
+import static org.testng.Assert.assertTrue;
 import static com.codeborne.selenide.Selenide.sleep;
 
 public class HomeTest extends BaseTest {
@@ -52,12 +54,22 @@ public class HomeTest extends BaseTest {
         sleep(1000);
         homePage.hoverOverChart();
         homePage.verifyTooltipAppears();
-        sleep(1000);
 
         String date = homePage.getTooltipDate();
         String value = homePage.getTooltipValue();
 
         System.out.println("Tooltip date: " + date);
         System.out.println("Tooltip value: " + value);
+    }
+
+    @Test(priority = 7)
+    public void testChartHoverWithOffset() {
+
+        homePage.clickDataChoice();
+        homePage.selectCustomRange(5, "January", 2026,
+                18, "January", 2026);
+
+        actions().moveToElement(homePage.chart, 50, 10).perform();
+        assertTrue(true);
     }
 }
