@@ -21,6 +21,9 @@ public class HomePage {
     final SelenideElement chartTooltip =
             $x("//div[contains(@style, 'position: absolute') and contains(@style, 'z-index: 9999999') " +
                     "and .//strong[contains(text(), 'USDT')]]");
+    final SelenideElement profile = $("svg.lucide-user-cog");
+    final SelenideElement authentication = $x("//*[@role='menu']//*[@role='switch']");
+    final SelenideElement connectAuthentication = $("[role='dialog']");
 
     public void pageOpen() {
         pageTitle.should(exist).shouldBe(visible, Duration.ofSeconds(10));
@@ -41,8 +44,9 @@ public class HomePage {
         dataChoice.shouldBe(enabled, Duration.ofSeconds(10)).hover().click();
     }
 
-    public void haveDataSide() {
+    public boolean haveDataSide() {
         dataSide.should(exist).shouldBe(visible, Duration.ofSeconds(10));
+        return true;
     }
 
     public void selectCustomDate(int day, String month, int year) {
@@ -63,8 +67,9 @@ public class HomePage {
         chart.shouldBe(visible).hover();
     }
 
-    public void verifyTooltipAppears() {
+    public boolean verifyTooltipAppears() {
         chartTooltip.shouldBe(visible, Duration.ofSeconds(5));
+        return true;
     }
 
     public String getTooltipDate() {
@@ -73,5 +78,18 @@ public class HomePage {
 
     public String getTooltipValue() {
         return chartTooltip.$("strong").getText();
+    }
+
+    public void clickProfileBtn() {
+        profile.shouldBe(enabled, Duration.ofSeconds(10)).hover().click();
+    }
+
+    public void clickAuthenticationBtn() {
+        authentication.shouldBe(enabled, Duration.ofSeconds(10)).hover().click();
+    }
+
+    public boolean haveConnectAuthentication() {
+        connectAuthentication.should(exist).shouldBe(visible, Duration.ofSeconds(10));
+        return true;
     }
 }
