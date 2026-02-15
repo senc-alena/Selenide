@@ -14,6 +14,7 @@ public class BaseTest {
     HomePage homePage;
     AccountPage accountPage;
 
+
     @BeforeMethod
     public void setup() {
         Configuration.browser = "chrome";

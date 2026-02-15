@@ -2,6 +2,7 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import pages.components.Header;
 
 import java.time.Duration;
 import java.util.List;
@@ -10,26 +11,24 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class HomePage {
+    public Header header = new Header();
+
     final SelenideElement pageTitle = $x("//*[@*='tw-text-[20px] tw-font-normal tw-text-[#3A3A3C]']");
     final SelenideElement futuresBtn = $x("//*[.='Futures']");
     final SelenideElement spotBtn = $x("//*[.='Spot']");
     final SelenideElement dataChoice =
             $x("//*[@class = 'tw-w-full tw-max-w-max tw-flex tw-flex-col tw-gap-2 !tw-max-w-full']");
     final SelenideElement dataSide = $("[data-align='center']");
-    private final String DATE_LOCATOR_PATTERN = "//*[contains(@aria-label, '%s %d, %d')]";
     public final SelenideElement chart =
             $x("//*[@class='tw-flex tw-flex-1 tw-relative tw-w-full']//canvas[@data-zr-dom-id='zr_0']");
     final SelenideElement chartTooltip =
             $x("//div[contains(@style, 'position: absolute') and contains(@style, 'z-index: 9999999') " +
                     "and .//strong[contains(text(), 'USDT')]]");
-    final SelenideElement profile = $("svg.lucide-user-cog");
     final SelenideElement authentication = $x("//*[@role='menu']//*[@role='switch']");
     final SelenideElement connectAuthentication = $("[role='dialog']");
     final SelenideElement assetsToken = $x("//*[@class='tw-flex tw-flex-col tw-gap-[24px] " +
             "tw-justify-between tw-flex-1']//*[text()='Token']");
-    final SelenideElement logo = $x("//*[@class='tw-flex tw-items-center tw-justify-between " +
-            "tw-py-[12px]']//*[@class='tw-flex tw-items-center tw-gap-[8px]']");
-    final SelenideElement accounts = $("a[href='/my-accounts']");
+    private final String DATE_LOCATOR_PATTERN = "//*[contains(@aria-label, '%s %d, %d')]";
 
     public void pageOpen() {
         pageTitle.should(exist).shouldBe(visible, Duration.ofSeconds(10));
@@ -86,10 +85,6 @@ public class HomePage {
         return chartTooltip.$("strong").getText();
     }
 
-    public void clickProfileBtn() {
-        profile.shouldBe(enabled, Duration.ofSeconds(10)).hover().click();
-    }
-
     public void clickAuthenticationBtn() {
         authentication.shouldBe(enabled, Duration.ofSeconds(10)).hover().click();
     }
@@ -105,13 +100,5 @@ public class HomePage {
 
     public void clickAssetsToken() {
         assetsToken.shouldBe(visible).click();
-    }
-
-    public void clickLogo() {
-        logo.shouldBe(visible).click();
-    }
-
-    public void clickAccountsLink() {
-        accounts.shouldBe(visible).click();
     }
 }

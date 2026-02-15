@@ -12,6 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.actions;
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -77,6 +78,7 @@ public class HomeTest extends BaseTest {
         homePage.clickDataChoice();
         homePage.selectCustomRange(5, "January", 2026,
                 18, "January", 2026);
+        sleep(1000);
 
         actions().moveToElement(homePage.chart, 50, 10).perform();
         assertTrue(true);
@@ -100,7 +102,7 @@ public class HomeTest extends BaseTest {
 
     @Test(priority = 9)
     public void checkHaveConnectAuthentication() {
-        homePage.clickProfileBtn();
+        homePage.header.clickProfile();
         homePage.clickAuthenticationBtn();
         homePage.haveConnectAuthentication();
         assertTrue(homePage.haveConnectAuthentication(),
@@ -126,9 +128,9 @@ public class HomeTest extends BaseTest {
 
     @Test(priority = 11)
     public void checkLogoRedirectsToHome() {
-        String expectedUrl = Configuration.baseUrl + "home";
+        String expectedUrl = Configuration.baseUrl;
 
-        homePage.clickLogo();
+        homePage.header.clickLogo();
 
         String actualUrl = WebDriverRunner.url();
         assertEquals(actualUrl, expectedUrl, "Логотип не ведет на главную");

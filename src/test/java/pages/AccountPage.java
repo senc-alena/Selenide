@@ -14,7 +14,6 @@ public class AccountPage {
     final SelenideElement resetBtn = $x("//*[text()='Reset']");
     final SelenideElement alert = $x("//div[@role='alert']");
     final SelenideElement totalValue = $x("//span[contains(text(), 'Total')]/following-sibling::span");
-    final SelenideElement chgValue = $x("//span[contains(text(), 'Chg 24h')]/following-sibling::span");
 
     public void pageOpen() {
         pageAccounts.should(exist).shouldBe(visible, Duration.ofSeconds(10));
@@ -29,10 +28,6 @@ public class AccountPage {
         return totalValue.shouldBe(visible).getText();
     }
 
-    public String getChgValue() {
-        return chgValue.shouldBe(visible).getText();
-    }
-
     public void clickResetBtn() {
         resetBtn.should(exist).shouldBe(visible, Duration.ofSeconds(10)).click();
     }
@@ -41,4 +36,3 @@ public class AccountPage {
         return alert.shouldBe(visible, Duration.ofSeconds(5)).isDisplayed();
     }
 }
-
