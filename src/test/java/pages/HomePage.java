@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 
 import java.time.Duration;
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
@@ -24,6 +25,11 @@ public class HomePage {
     final SelenideElement profile = $("svg.lucide-user-cog");
     final SelenideElement authentication = $x("//*[@role='menu']//*[@role='switch']");
     final SelenideElement connectAuthentication = $("[role='dialog']");
+    final SelenideElement assetsToken = $x("//*[@class='tw-flex tw-flex-col tw-gap-[24px] " +
+            "tw-justify-between tw-flex-1']//*[text()='Token']");
+    final SelenideElement logo = $x("//*[@class='tw-flex tw-items-center tw-justify-between " +
+            "tw-py-[12px]']//*[@class='tw-flex tw-items-center tw-gap-[8px]']");
+    final SelenideElement accounts = $("a[href='/my-accounts']");
 
     public void pageOpen() {
         pageTitle.should(exist).shouldBe(visible, Duration.ofSeconds(10));
@@ -91,5 +97,21 @@ public class HomePage {
     public boolean haveConnectAuthentication() {
         connectAuthentication.should(exist).shouldBe(visible, Duration.ofSeconds(10));
         return true;
+    }
+
+    public List<String> getFirstColumnTexts() {
+        return $$x("//tr/td[1]").texts();
+    }
+
+    public void clickAssetsToken() {
+        assetsToken.shouldBe(visible).click();
+    }
+
+    public void clickLogo() {
+        logo.shouldBe(visible).click();
+    }
+
+    public void clickAccountsLink() {
+        accounts.shouldBe(visible).click();
     }
 }

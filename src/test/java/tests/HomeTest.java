@@ -1,11 +1,18 @@
 package tests;
 
+import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.ex.ElementNotFound;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static com.codeborne.selenide.Selenide.actions;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 public class HomeTest extends BaseTest {
@@ -98,5 +105,32 @@ public class HomeTest extends BaseTest {
         homePage.haveConnectAuthentication();
         assertTrue(homePage.haveConnectAuthentication(),
                 "Элемент аутентификации не отобразился");
+    }
+
+    @Test(priority = 10)
+    public void checkTokenSorting() {
+
+        homePage.clickAssetsToken();
+        List<String> asc = homePage.getFirstColumnTexts();
+        List<String> sortedAsc = new ArrayList<>(asc);
+        Collections.sort(sortedAsc);
+        assertEquals(asc, sortedAsc, "Не по возрастанию");
+
+        homePage.clickAssetsToken();
+        List<String> desc = homePage.getFirstColumnTexts();
+        List<String> sortedDesc = new ArrayList<>(desc);
+        Collections.sort(sortedDesc);
+        Collections.reverse(sortedDesc);
+        assertEquals(desc, sortedDesc, "Не по убыванию");
+    }
+
+    @Test(priority = 11)
+    public void checkLogoRedirectsToHome() {
+        String expectedUrl = Configuration.baseUrl + "home";
+
+        homePage.clickLogo();
+
+        String actualUrl = WebDriverRunner.url();
+        assertEquals(actualUrl, expectedUrl, "Логотип не ведет на главную");
     }
 }
