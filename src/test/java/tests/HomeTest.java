@@ -1,6 +1,8 @@
 package tests;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.WebDriverRunner;
 import com.codeborne.selenide.ex.ElementNotFound;
 import org.testng.annotations.BeforeMethod;
@@ -12,7 +14,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static com.codeborne.selenide.Selenide.actions;
-import static com.codeborne.selenide.Selenide.sleep;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
@@ -78,8 +79,7 @@ public class HomeTest extends BaseTest {
         homePage.clickDataChoice();
         homePage.selectCustomRange(5, "January", 2026,
                 18, "January", 2026);
-        sleep(1000);
-
+        Selenide.element(homePage.chart).shouldBe(Condition.visible);
         actions().moveToElement(homePage.chart, 50, 10).perform();
         assertTrue(true);
     }

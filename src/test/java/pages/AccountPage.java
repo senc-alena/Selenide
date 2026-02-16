@@ -12,7 +12,6 @@ public class AccountPage {
     final SelenideElement pageAccounts = $x("//*[text()='My Demo']");
     final SelenideElement spotBtn = $x("//*[text()='Spot']");
     final SelenideElement resetBtn = $x("//*[text()='Reset']");
-    final SelenideElement alert = $x("//div[@role='alert']");
     final SelenideElement totalValue = $x("//span[contains(text(), 'Total')]/following-sibling::span");
 
     public void pageOpen() {
@@ -30,9 +29,5 @@ public class AccountPage {
 
     public void clickResetBtn() {
         resetBtn.should(exist).shouldBe(visible, Duration.ofSeconds(10)).click();
-    }
-
-    public boolean alertDisplayed() {
-        return alert.shouldBe(visible, Duration.ofSeconds(5)).isDisplayed();
     }
 }

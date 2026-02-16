@@ -13,6 +13,7 @@ import static com.codeborne.selenide.Selenide.*;
 public class HomePage {
     public Header header = new Header();
 
+    private final String DATE_LOCATOR_PATTERN = "//*[contains(@aria-label, '%s %d, %d')]";
     final SelenideElement pageTitle = $x("//*[@*='tw-text-[20px] tw-font-normal tw-text-[#3A3A3C]']");
     final SelenideElement futuresBtn = $x("//*[.='Futures']");
     final SelenideElement spotBtn = $x("//*[.='Spot']");
@@ -28,9 +29,7 @@ public class HomePage {
     final SelenideElement connectAuthentication = $("[role='dialog']");
     final SelenideElement assetsToken = $x("//*[@class='tw-flex tw-flex-col tw-gap-[24px] " +
             "tw-justify-between tw-flex-1']//*[text()='Token']");
-    private final String DATE_LOCATOR_PATTERN = "//*[contains(@aria-label, '%s %d, %d')]";
-    final SelenideElement assetsTable = $x("//h1[text()='Assets']/ancestor::div[contains(@class, " +
-            "'tw-flex-col')]//table");
+    final SelenideElement assetsTable = $x("//h1[text()='Assets']/following::table[1]");
 
     public void pageOpen() {
         pageTitle.should(exist).shouldBe(visible, Duration.ofSeconds(10));
