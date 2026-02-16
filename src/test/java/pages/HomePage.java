@@ -29,6 +29,8 @@ public class HomePage {
     final SelenideElement assetsToken = $x("//*[@class='tw-flex tw-flex-col tw-gap-[24px] " +
             "tw-justify-between tw-flex-1']//*[text()='Token']");
     private final String DATE_LOCATOR_PATTERN = "//*[contains(@aria-label, '%s %d, %d')]";
+    final SelenideElement assetsTable = $x("//h1[text()='Assets']/ancestor::div[contains(@class, " +
+            "'tw-flex-col')]//table");
 
     public void pageOpen() {
         pageTitle.should(exist).shouldBe(visible, Duration.ofSeconds(10));
@@ -95,7 +97,7 @@ public class HomePage {
     }
 
     public List<String> getFirstColumnTexts() {
-        return $$x("//tr/td[1]").texts();
+        return assetsTable.$$x(".//tr/td[1]").texts();
     }
 
     public void clickAssetsToken() {
