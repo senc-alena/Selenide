@@ -2,25 +2,34 @@ package pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import pages.components.Header;
 
 import java.time.Duration;
+import java.util.List;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class HomePage {
+    public Header header = new Header();
+
+    private final String DATE_LOCATOR_PATTERN = "//*[contains(@aria-label, '%s %d, %d')]";
     final SelenideElement pageTitle = $x("//*[@*='tw-text-[20px] tw-font-normal tw-text-[#3A3A3C]']");
     final SelenideElement futuresBtn = $x("//*[.='Futures']");
     final SelenideElement spotBtn = $x("//*[.='Spot']");
     final SelenideElement dataChoice =
             $x("//*[@class = 'tw-w-full tw-max-w-max tw-flex tw-flex-col tw-gap-2 !tw-max-w-full']");
     final SelenideElement dataSide = $("[data-align='center']");
-    private final String DATE_LOCATOR_PATTERN = "//*[contains(@aria-label, '%s %d, %d')]";
     public final SelenideElement chart =
             $x("//*[@class='tw-flex tw-flex-1 tw-relative tw-w-full']//canvas[@data-zr-dom-id='zr_0']");
     final SelenideElement chartTooltip =
             $x("//div[contains(@style, 'position: absolute') and contains(@style, 'z-index: 9999999') " +
                     "and .//strong[contains(text(), 'USDT')]]");
+    final SelenideElement authentication = $x("//*[@role='menu']//*[@role='switch']");
+    final SelenideElement connectAuthentication = $("[role='dialog']");
+    final SelenideElement assetsToken = $x("//*[@class='tw-flex tw-flex-col tw-gap-[24px] " +
+            "tw-justify-between tw-flex-1']//*[text()='Token']");
+    final SelenideElement assetsTable = $x("//h1[text()='Assets']/following::table[1]");
 
     public void pageOpen() {
         pageTitle.should(exist).shouldBe(visible, Duration.ofSeconds(10));
@@ -41,8 +50,9 @@ public class HomePage {
         dataChoice.shouldBe(enabled, Duration.ofSeconds(10)).hover().click();
     }
 
-    public void haveDataSide() {
+    public boolean haveDataSide() {
         dataSide.should(exist).shouldBe(visible, Duration.ofSeconds(10));
+        return true;
     }
 
     public void selectCustomDate(int day, String month, int year) {
@@ -63,8 +73,9 @@ public class HomePage {
         chart.shouldBe(visible).hover();
     }
 
-    public void verifyTooltipAppears() {
+    public boolean verifyTooltipAppears() {
         chartTooltip.shouldBe(visible, Duration.ofSeconds(5));
+        return true;
     }
 
     public String getTooltipDate() {
@@ -73,5 +84,22 @@ public class HomePage {
 
     public String getTooltipValue() {
         return chartTooltip.$("strong").getText();
+    }
+
+    public void clickAuthenticationBtn() {
+        authentication.shouldBe(enabled, Duration.ofSeconds(10)).hover().click();
+    }
+
+    public boolean haveConnectAuthentication() {
+        connectAuthentication.should(exist).shouldBe(visible, Duration.ofSeconds(10));
+        return true;
+    }
+
+    public List<String> getFirstColumnTexts() {
+        return assetsTable.$$x(".//tr/td[1]").texts();
+    }
+
+    public void clickAssetsToken() {
+        assetsToken.shouldBe(visible).click();
     }
 }
