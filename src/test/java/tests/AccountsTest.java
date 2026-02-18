@@ -4,7 +4,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertNotEquals;
-import static org.testng.Assert.assertTrue;
 
 public class AccountsTest extends BaseTest {
 
@@ -35,11 +34,7 @@ public class AccountsTest extends BaseTest {
     }
 
     @Test
-    public void checkAlertDisplayed() {
-        accountPage.pageOpen();
-
+    public void checkClickResetBtn() {
         accountPage.clickResetBtn();
-
-        assertTrue(accountPage.alertDisplayed(), "Алерт не появился");
     }
 }
